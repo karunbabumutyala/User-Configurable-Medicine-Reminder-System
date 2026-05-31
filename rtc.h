@@ -3,8 +3,8 @@
 #ifndef _RTC_H_                  // Include guard start to prevent multiple inclusion
 #define _RTC_H_                  // Define macro for include guard
 
-#define FOSC 1200000            // Oscillator frequency = 1.2 MHz
-#define CCLK (FOSC*5)           // CPU clock = FOSC × 5
+#define FOSC 12000000            // Oscillator frequency = 12 MHz
+#define CCLK (FOSC*5)           // CPU clock = FOSC Ã— 5
 #define PCLK (CCLK/4)           // Peripheral clock = CCLK / 4
 
 //PRESCALAR INT & FRAC           // Section for RTC prescaler values
@@ -16,7 +16,7 @@
 #define RTC_ENABLE (1<<0)       // Bit to enable RTC
 #define RTC_CLKSRC (1<<4)       // Bit to select clock source
 
-enum day{SUN,MON,TUE,WED,THU,FRI,SAT}; // Enumeration for days of the week (0–6)
+enum day{SUN,MON,TUE,WED,THU,FRI,SAT}; // Enumeration for days of the week (0â€“6)
 
 void init_rtc(void);            // Function to initialize RTC
 
