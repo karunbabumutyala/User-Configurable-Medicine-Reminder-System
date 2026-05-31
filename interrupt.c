@@ -13,49 +13,49 @@ extern int eint0_flag;            // External flag for interrupt 0
 
 void init_interrupt(void)         // Function to initialize interrupts
 {
-	// cfg the p0.1 & p0.3 as EINT0 & EINT1 function   // Existing comment
+	// cfg the p0.1 & p0.3 as EINT0 & EINT1 function   
 	
-	//clear the 2,3 & 6,7 bit in PINSEL0               // Existing comment
+	//clear the 2,3 & 6,7 bit in PINSEL0               
 	PINSEL0 &= (~(3<<2))|(~(3<<6));  // Clear bits for P0.1 and P0.3
 	
-	//update as eint0 &eint1                           // Existing comment
+	//update as eint0 &eint1                           
 	PINSEL0 |= EINT0_INPUT_PIN|EINT1_INPUT_PIN; // Configure pins as EINT0 & EINT1
 	
-	//cfg VECTOR INTERRUPT CONTROLLER peripheral       // Existing comment
+	//cfg VECTOR INTERRUPT CONTROLLER peripheral       
 	
-	//EINT0 and EINT1 as irq type interrupts           // Existing comment
+	//EINT0 and EINT1 as irq type interrupts           
 	//VICIntSelect = (0<<EINT0_CHNO)|(0<<EINT1_CHNO);  // IRQ selection (not required)
 	
-	//above statement is no required                   // Existing comment
+	//above statement is no required                   
 	
-	//default is ZERO(VICIntSelect =0)                 // Existing comment
+	//default is ZERO(VICIntSelect =0)                
 	
-	//enable the EINT0 &EINT1                          // Existing comment
+	//enable the EINT0 &EINT1                          
 	VICIntEnable = (1<<EINT0_CHNO)|(1<<EINT1_CHNO); // Enable interrupts
 	
-	//cfg eint0 as virq with highest prority-0         // Existing comment
+	//cfg eint0 as virq with highest prority-0         
 	VICVectCntl0=(1<<5)|(EINT0_CHNO); // Enable slot and assign channel
 	
-	//load eint0_isr address int0 LUT sfr              // Existing comment
+	//load eint0_isr address int0 LUT sfr              
 	VICVectAddr0=(u32)eint0_isr; // Load ISR address
 	
-	//cfg eint1 as virq with highest prority-1         // Existing comment
+	//cfg eint1 as virq with highest prority-1         
 	VICVectCntl1=(1<<5)|(EINT1_CHNO); // Enable slot and assign channel
 	
-	//load eint0_isr address int0 LUT sfr              // Existing comment
+	//load eint0_isr address int0 LUT sfr              
 	VICVectAddr1=(u32)eint1_isr; // Load ISR address
 	
 	
-	//confg the EXTERNAL INTERRUPTS PERIPHERAL         // Existing comment
+	//confg the EXTERNAL INTERRUPTS PERIPHERAL         
 	
-	//EXTINT =0;//default                              // Existing comment
+	//EXTINT =0;//default                             
 	
-	//cfg the  EINT0 & EINT1 as  EDGE TRIGGERING       // Existing comment
+	//cfg the  EINT0 & EINT1 as  EDGE TRIGGERING       
 	EXTMODE |= (1<<0)|(1<<1); // Set edge triggered mode
 	                           // 0 -> EINT0
 	                           // 1 -> EINT1
 
-//cfg the both as falling edge triggering             // Existing comment
+//cfg the both as falling edge triggering             
 
 	EXTPOLAR &=~(1<<0);      // Set EINT0 as falling edge
 	EXTPOLAR &=~(1<<1);      // Set EINT1 as falling edge
@@ -63,25 +63,25 @@ void init_interrupt(void)         // Function to initialize interrupts
 
 void enable_interrupt_eint0(void) // Function to enable EINT0
 {
-	//enable the EINT0 in VIC                         // Existing comment
+	//enable the EINT0 in VIC                         
 	VICIntEnable = 1<<EINT0_CHNO; // Enable interrupt
 }
 
 void enable_interrupt_eint1(void) // Function to enable EINT1
 {
-	//enable the EINT1 in VIC                         // Existing comment
+	//enable the EINT1 in VIC                        
 	VICIntEnable = 1<<EINT1_CHNO; // Enable interrupt
 }
 
 void disable_interrupt_eint0(void) // Function to disable EINT0
 {
-	//disable the EINT0 in VIC                        // Existing comment
+	//disable the EINT0 in VIC                        
 	VICIntEnClr = 1<<EINT0_CHNO; // Disable interrupt
 }
 
 void disable_interrupt_eint1(void) // Function to disable EINT1
 {
-	//disable the EINT0 in VIC                        // Existing comment
+	//disable the EINT0 in VIC                       
 	VICIntEnClr = 1<<EINT1_CHNO; // Disable interrupt
 }
 void interrupt1_menu(void)          // Function to handle menu via interrupt
