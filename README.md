@@ -60,7 +60,6 @@ The project is mainly focused on assisting elderly people and patients who need 
 | --------------- | -------------------------------- |
 | 🧠 Keil uVision | Code development and compilation |
 | ⚙️ Flash Magic  | Flashing program into LPC2148    |
-| 🖥️ Embedded C  | Programming language             |
 
 ---
 
@@ -72,7 +71,6 @@ The project is mainly focused on assisting elderly people and patients who need 
 ✨ Buzzer alert notifications
 ✨ Easy keypad navigation
 ✨ Interrupt handling support
-✨ Modular embedded C programming
 
 ---
 
