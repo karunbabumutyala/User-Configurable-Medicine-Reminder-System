@@ -35,17 +35,33 @@ The project is mainly focused on assisting elderly people and patients who need 
 * ⚡ Develop a real-time embedded healthcare application
 
 ---
+# 🧩 Functional Block Diagram
 
-# 🛠️ Hardware Components Used
+<img width="1492" height="1054" alt="blockdiagram" src="https://github.com/user-attachments/assets/6470c664-7e12-4d57-a028-29b7590a8523" />
 
-| Component        | Description                       |
-| ---------------- | --------------------------------- |
-| 🔹 LPC2148       | ARM7 Microcontroller              |
-| 🔹 RTC           | Real Time Clock for time tracking |
-| 🔹 LCD 16x2      | Display reminder messages         |
-| 🔹 Matrix Keypad | User input for configuration      |
-| 🔹 Buzzer        | Audio alert for reminders         |
-| 🔹 Power Supply  | System power source               |
+---
+# 🔌 Circuit Diagram
+
+<p align="center">
+  <img width="720" height="515" alt="image" src="https://github.com/user-attachments/assets/c3227f36-e6b5-44cb-95ca-07bbbb38c83e" />
+
+</p>
+
+> 📌 Complete circuit connection diagram of the LPC2148 based User-Configurable Medicine Reminder System.
+
+---
+
+## ⚡ Circuit Connections
+
+| Component | LPC2148 Interface |
+|---|---|
+| ⌨️ 4x4 Matrix Keypad | GPIO Pins |
+| 🖥️ LCD 16x2 | Data + Control Pins |
+| ⏰ RTC Module | I2C Interface |
+| 🔔 Buzzer | GPIO Output Pin |
+| 🔘 Switch 1 | EINT0 |
+| 🔘 Switch 2 | EINT1 |
+| ⚡ Power Supply | 3.3V / 5V |
 
 ---
 
@@ -60,16 +76,13 @@ The project is mainly focused on assisting elderly people and patients who need 
 
 # ⚙️ Features
 
----
-
 ## ⏰ Real-Time Clock Integration
 
 - Utilizes the LPC2148 RTC for accurate timekeeping
 - Maintains current time, date, and day continuously
 - Ensures precise scheduling of medicine alerts
-
-<p align="center">
-  <img src="rtc_display.png" width="250">
+<p align = "center">
+<img width="199" height="80" alt="image" src="https://github.com/user-attachments/assets/743063c6-5c0f-4b0b-bed5-ebfdec2df171" />
 </p>
 
 ---
@@ -84,7 +97,10 @@ The project is mainly focused on assisting elderly people and patients who need 
 - Handles multiple medicine reminders efficiently
 
 <p align="center">
-  <img src="medicine_slot.png" width="250">
+ <img width="194" height="79" alt="image" src="https://github.com/user-attachments/assets/4cc2d875-99b8-438e-a083-138e300bb655" />
+ <img width="196" height="84" alt="image" src="https://github.com/user-attachments/assets/d999b05e-e164-4b78-b179-fdad0dee53f5" />
+
+
 </p>
 
 ---
@@ -104,7 +120,8 @@ The project is mainly focused on assisting elderly people and patients who need 
 - Ensures timely medicine reminders
 
 <p align="center">
-  <img src="alert_screen.png" width="250">
+  <img width="202" height="84" alt="image" src="https://github.com/user-attachments/assets/40344c4f-230f-43dd-ac92-0ea65a5646b2" />
+
 </p>
 
 ---
@@ -126,7 +143,8 @@ The project is mainly focused on assisting elderly people and patients who need 
   - Navigating menus easily
 
 <p align="center">
-  <img src="keypad.png" width="200">
+  <img width="188" height="180" alt="image" src="https://github.com/user-attachments/assets/dd70721d-24a3-40dd-bc41-4ed097963843" />
+
 </p>
 
 ---
@@ -161,103 +179,86 @@ The project is mainly focused on assisting elderly people and patients who need 
 - Simplifies debugging and maintenance
 
 ---
+# ⚙️ Hardware Setup
+
 ---
 
-# 🧩 Functional Block Diagram
+## 🔘 Switch 1 (Edit Mode)
 
-<img width="1492" height="1054" alt="blockdiagram" src="https://github.com/user-attachments/assets/6470c664-7e12-4d57-a028-29b7590a8523" />
+Switch1 is connected to the **EINT0** pin of LPC2148.
+
+When the switch is pressed, the system enters **Edit Mode**.
+
+<p align="center">
+  <img width="322" height="395" alt="image" src="https://github.com/user-attachments/assets/9a9ce7e0-b410-4aa3-b66f-6236a7d32e51" />
+
+</p>
+
+### User can:
+
+- Set time and date
+- Add medicine timings
+- Edit medicine slots
+- Navigate menu using keypad
+
+After editing, the system returns to normal monitoring mode.
+
+---
+
+## 🔕 Switch 2 (Stop Alert)
+
+Switch2 is connected to the **EINT1** pin of LPC2148.
+
+When medicine time matches, the buzzer turns ON.
+
+<p align="center">
+  <img width="310" height="384" alt="image" src="https://github.com/user-attachments/assets/14a4bdcc-7019-430a-a007-ec9f6ee74f9c" />
+
+</p>
+
+### When Switch2 is pressed:
+
+- Buzzer stops
+- LCD message clears
+- Medicine alert is acknowledged
+
+Then the system continues monitoring normally.
 
 ---
 
 # 🔄 Working Principle
 
-- 1️⃣ User sets medicine reminder timings using keypad
-- 2️⃣ RTC continuously maintains current time
-- 3️⃣ LPC2148 compares RTC time with stored reminder time
-- 4️⃣ When timing matches:
+- 1️⃣ RTC starts and continuously maintains current time
+- 2️⃣ User presses Switch1 (Edit Mode)
+- 3️⃣ User sets medicine reminder timings using keypad
+- 4️⃣ LPC2148 stores and compares RTC time with reminder time
+- 5️⃣ When timing matches:
   - 🔔 Buzzer turns ON
   - 📟 LCD displays medicine reminder message
-- 5️⃣ User acknowledges reminder using keypad/button
-
----
-
-# 📂 Project Structure
-
-```text
-📁 Medicine Reminder System
- ┣ 📄 main.c
- ┣ 📄 lcd.c
- ┣ 📄 lcd.h
- ┣ 📄 rtc.c
- ┣ 📄 rtc.h
- ┣ 📄 keypad.c
- ┣ 📄 keypad.h
- ┣ 📄 interrupt.c
- ┣ 📄 interrupt.h
- ┣ 📄 types.h
- ┣ 📄 delay.c
- ┣ 📄 delay.h
- ┗ 📄 README.md
-```
-
----
-
-# 🚀 How to Run the Project
-
-### Step 1️⃣
-
-Open the project in **Keil uVision**.
-
-### Step 2️⃣
-
-Compile the Embedded C code.
-
-### Step 3️⃣
-
-Generate HEX file.
-
-### Step 4️⃣
-
-Flash the HEX file into LPC2148 using **Flash Magic**.
-
-### Step 5️⃣
-
-Connect hardware components properly.
-
-### Step 6️⃣
-
-Power ON the system and configure medicine timings.
-
----
-
-# 📸 Project Output
-
-## 🖥️ LCD Display Example
-
-```text
-Medicine Time!
-Take Tablet
-```
+- 6️⃣ User presses Switch2 to stop alert
+- 7️⃣ System returns to normal monitoring mode
 
 ---
 
 # 🌟 Advantages
 
-✅ Easy to use
-✅ Helpful for elderly people
-✅ Improves medicine schedule management
-✅ Low power embedded solution
-✅ Compact and cost effective
+- ✅ Easy to use
+- ✅ Helpful for elderly people
+- ✅ Improves medicine schedule management
+- ✅ Low power embedded solution
+- ✅ Compact and cost effective
 
 ---
 
 # 🔮 Future Enhancements
 
-🚀 GSM message alerts
-🚀 Mobile app integration
-🚀 IoT connectivity
-🚀 Voice notification system
-🚀 Cloud-based reminder storage
+- 🚀 GSM message alerts
+- 🚀 Mobile app integration
+- 🚀 IoT connectivity
+- 🚀 Voice notification system
+- 🚀 Cloud-based reminder storage
+
+---
 
 ---
 
@@ -265,17 +266,6 @@ Take Tablet
 
 **Karun Babu Mutyala**
 Embedded Systems Enthusiast ⚡
-
----
-
-# 📚 Technologies Used
-
-* 🔹 Embedded C
-* 🔹 ARM7 LPC2148
-* 🔹 RTC Interfacing
-* 🔹 LCD Interfacing
-* 🔹 Keypad Interfacing
-* 🔹 Interrupt Programming
 
 ---
 
